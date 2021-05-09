@@ -80,7 +80,7 @@ class Ghost extends DirectionalAssetEntity {
   }
 
   move() {
-    if (this.level.game.screen !== "GAME") return;
+    if (this.level.game.screen !== this.level) return;
 
     const newDirection = this.newDirection;
     switch (newDirection) {
@@ -123,7 +123,7 @@ class Pacman extends DirectionalAssetEntity {
   }
 
   move() {
-    if (this.level.game.screen !== "GAME") return;
+    if (this.level.game.screen !== this.level) return;
 
     const direction = this.possibleDirections.includes(this.direction) && this.direction;
     switch (direction) {

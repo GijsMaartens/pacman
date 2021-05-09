@@ -23,6 +23,7 @@ const keyMap = {
   40: "down",
   37: "left",
   39: "right",
+  32: "space",
 };
 
 const game = new Game({ x: 450, y: 510 });
@@ -36,6 +37,8 @@ function keyPressed() {
 }
 
 function setup() {
+  const screen = new Screen();
+  screen.addText(new Text("Pacman", 130, 75, 50));
+  game.screen = screen;
   game.load();
-  game.start(levelStructure);
 }

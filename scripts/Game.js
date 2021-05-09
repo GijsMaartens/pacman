@@ -22,6 +22,7 @@ class DirectionalAsset {
 class Game {
   dimensions = { x: null, y: null };
   assets = { ghosts: { blue: {}, pink: {}, red: {} }, pacman: {} };
+  screens = { start: null, gameover: null };
   level;
   screen;
   constructor(dimensions) {
@@ -46,7 +47,7 @@ class Game {
     this.level.spawnGhost(3, 3, "red", 3);
     this.level.spawnGhost(7, 4, "blue", 4);
     this.level.spawnPacman(7, 12);
-    this.screen = "GAME";
+    this.screen = this.level;
   }
 
   input(input) {
@@ -55,15 +56,16 @@ class Game {
       case "down":
       case "left":
       case "right":
-        if (this.screen !== "GAME") return;
+        if (this.screen !== this.level) return;
         this.level.entities.pacman.turn(input);
-      case "click":
         break;
+      case "space":
+        if (this.screen.confirm) this.screen.confirm();
     }
   }
 
   render() {
     background("black");
-    this.level.render();
+    this.screen.render();
   }
 }
