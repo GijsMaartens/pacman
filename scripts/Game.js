@@ -31,6 +31,7 @@ class Game {
 
   load() {
     this.loadAssets();
+    this.screen = this.screens.start;
     createCanvas(this.dimensions.x, this.dimensions.y);
   }
 

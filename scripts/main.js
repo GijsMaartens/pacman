@@ -37,8 +37,17 @@ function keyPressed() {
 }
 
 function setup() {
-  const screen = new Screen();
-  screen.addText(new Text("Pacman", 130, 75, 50));
-  game.screen = screen;
+  const gameoverScreen = new Screen(game);
+  gameoverScreen.addElement(new Text("Game Over!", 90, 75, 50));
+  gameoverScreen.addElement(new Text("Hit space to retry", 110, 410, 30));
+
+  const startScreen = new Screen(game);
+  startScreen.addElement(new Text("Pacman", 130, 75, 50));
+  startScreen.addElement(new Text("Hit space to start", 110, 410, 30));
+
+  game.screens = { start: startScreen, gameover: gameoverScreen };
   game.load();
+  const pacmanImg = new Img(game.assets.pacman.right, 120, 150, 200, 200);
+  startScreen.addElement(pacmanImg);
+  gameoverScreen.addElement(pacmanImg);
 }

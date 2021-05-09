@@ -17,15 +17,39 @@ class Text {
   }
 }
 
-class Screen {
-  texts = [];
-  constructor() {}
-
-  addText(text) { this.texts.push(text); }
+class Img {
+  asset;
+  x;
+  y;
+  height;
+  width;
+  constructor(asset, x, y, width, height) {
+    this.asset = asset;
+    this.x = x;
+    this.y = y;
+    this.height = height;
+    this.width = width;
+  }
 
   render() {
-    for (const text of this.texts) {
-      text.render();
+    image(this.asset, this.x, this.y, this.width, this.height);
+  }
+}
+
+class Screen {
+  elements = [];
+  game;
+  constructor(game) { this.game = game; }
+
+  addElement(element) { this.elements.push(element); }
+
+  confirm() {
+    this.game.start(levelStructure);
+  }
+
+  render() {
+    for (const element of this.elements) {
+      element.render();
     }
   }
 }
