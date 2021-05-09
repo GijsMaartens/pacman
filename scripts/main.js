@@ -41,7 +41,7 @@ function setup() {
 
   const gameoverScreen = new Screen(game);
   gameoverScreen.addElement(new Text("Game Over!", 90, 75, 50));
-  gameoverScreen.addElement(new Text("Hit space to retry", 110, 410, 30));
+  gameoverScreen.addElement(new Text("Hit space to restart", 100, 410, 30));
   gameoverScreen.addElement(highScoreText);
 
   const startScreen = new Screen(game);

@@ -56,6 +56,8 @@ class Palette extends Entity {
   }
 
   pickup() {
+    this.level.game.assets.walk.stop();
+    this.level.game.assets.eat.play();
     this.level.entities.palettes.splice(this.level.entities.palettes.indexOf(this), 1);
     this.level.game.addScore(this.isPower ? 100 : 10);
   }
@@ -112,7 +114,7 @@ class Pacman extends DirectionalAssetEntity {
   }
 
   turn(direction) {
-    if (this.direction === direction) return;
+    if (this.direction === direction && this.moveTimer) return;
     this.direction = direction;
 
     if (this.moveTimer) clearTimeout(this.moveTimer);
@@ -120,6 +122,7 @@ class Pacman extends DirectionalAssetEntity {
   }
 
   die() {
+    this.level.game.assets.death.play();
     this.level.game.end();
   }
 
@@ -141,6 +144,7 @@ class Pacman extends DirectionalAssetEntity {
         this.x++;
         break;
     }
+    if (direction) this.level.game.assets.walk.play();
 
     this.moveTimer = setTimeout(this.move.bind(this), this.movementInterval);
   }
@@ -209,6 +213,7 @@ class Level extends Screen {
     for (const palett of this.entities.palettes) {
       if (pacmanX === palett.x && pacmanY === palett.y) palett.pickup();
     }
+    if (this.entities.palettes.length === 0) this.game.end();
   }
 
   render() {

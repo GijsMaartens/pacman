@@ -1,9 +1,9 @@
 function img(path) {
-  return loadImage(`assets/images/${path}`);
+  return loadImage(`assets/images/${path}.png`);
 }
 
 function sound(path) {
-  return loadSound(`assets/sounds/${path}`);
+  return loadSound(`assets/sounds/${path}.wav`);
 }
 
 class DirectionalAsset {
@@ -12,10 +12,10 @@ class DirectionalAsset {
   left;
   right;
   constructor(path) {
-    this.up = img(`${path}up.png`);
-    this.down = img(`${path}down.png`);
-    this.left = img(`${path}left.png`);
-    this.right = img(`${path}right.png`);
+    this.up = img(`${path}up`);
+    this.down = img(`${path}down`);
+    this.left = img(`${path}left`);
+    this.right = img(`${path}right`);
   }
 }
 
@@ -42,9 +42,14 @@ class Game {
     this.assets.ghosts.pink = new DirectionalAsset("ghosts/pink");
     this.assets.ghosts.red = new DirectionalAsset("ghosts/red");
     this.assets.pacman = new DirectionalAsset("pacman");
+    this.assets.death = sound("death");
+    this.assets.eat = sound("eat");
+    this.assets.start = sound("start");
+    this.assets.walk = sound("walk");
   }
 
   start(structure) {
+    this.assets.start.play();
     this.level = new Level(this, structure);
     this.level.spawnGhost(11, 3, "pink", 2);
     this.level.spawnGhost(3, 3, "red", 3);
