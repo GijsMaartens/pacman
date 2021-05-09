@@ -57,6 +57,7 @@ class Palette extends Entity {
 
   pickup() {
     this.level.entities.palettes.splice(this.level.entities.palettes.indexOf(this), 1);
+    this.level.game.addScore(this.isPower ? 100 : 10);
   }
 
   render() {
@@ -119,7 +120,7 @@ class Pacman extends DirectionalAssetEntity {
   }
 
   die() {
-    console.log("GAME OVER!");
+    this.level.game.end();
   }
 
   move() {
@@ -145,7 +146,7 @@ class Pacman extends DirectionalAssetEntity {
   }
 }
 
-class Level {
+class Level extends Screen {
   static DIMENSIONS = { x: 15, y: 17 };
   entities = {
     pacman: null,
@@ -156,16 +157,22 @@ class Level {
   structure = null;
   game = null;
   constructor(game, structure) {
+    super(game);
     this.structure = structure;
     this.game = game;
 
     this.buildEntities();
+    this.elements.push(new Text(() => this.UI, 95, 500, 16));
   }
 
   get gridSize() {
     const x = this.game.dimensions.x / Level.DIMENSIONS.x;
     const y = this.game.dimensions.y / Level.DIMENSIONS.y;
     return { x, y };
+  }
+
+  get UI() {
+    return `High Score: ${this.game.highScore} | Current Score: ${this.game.score}`;
   }
 
   spawnGhost(x, y, color, speed) {
@@ -220,5 +227,7 @@ class Level {
       ghost.render();
     }
     if (this.entities.pacman) this.entities.pacman.render();
+
+    super.render();
   }
 }

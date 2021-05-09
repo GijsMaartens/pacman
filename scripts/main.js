@@ -37,13 +37,17 @@ function keyPressed() {
 }
 
 function setup() {
+  const highScoreText = new Text(() => `High Score: ${game.highScore}`, 175, 500, 16);
+
   const gameoverScreen = new Screen(game);
   gameoverScreen.addElement(new Text("Game Over!", 90, 75, 50));
   gameoverScreen.addElement(new Text("Hit space to retry", 110, 410, 30));
+  gameoverScreen.addElement(highScoreText);
 
   const startScreen = new Screen(game);
   startScreen.addElement(new Text("Pacman", 130, 75, 50));
   startScreen.addElement(new Text("Hit space to start", 110, 410, 30));
+  startScreen.addElement(highScoreText);
 
   game.screens = { start: startScreen, gameover: gameoverScreen };
   game.load();

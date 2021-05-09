@@ -25,6 +25,8 @@ class Game {
   screens = { start: null, gameover: null };
   level;
   screen;
+  highScore = Number(localStorage.getItem("highScore")) || 0;
+  score = 0;
   constructor(dimensions) {
     this.dimensions = dimensions;
   }
@@ -48,7 +50,20 @@ class Game {
     this.level.spawnGhost(3, 3, "red", 3);
     this.level.spawnGhost(7, 4, "blue", 4);
     this.level.spawnPacman(7, 12);
+    this.score = 0;
     this.screen = this.level;
+  }
+
+  addScore(score) {
+    this.score += score;
+    if (this.score > this.highScore) {
+      this.highScore = this.score;
+      localStorage.setItem("highScore", this.highScore);
+    }
+  }
+
+  end() {
+    this.screen = this.screens.gameover;
   }
 
   input(input) {
